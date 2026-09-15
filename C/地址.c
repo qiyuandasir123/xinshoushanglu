@@ -6,6 +6,7 @@ void f(int *p)
 }
 int main()
 {
+    printf("heiio");
     int i = 1;
     printf("i的地址是:0x%p\n", &i);
     f(&i);
