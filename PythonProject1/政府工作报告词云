@@ -1,0 +1,16 @@
+import jieba as j
+import wordcloud as wc
+from scipy.misc import imread
+mask=imread('fivestar.png')
+f=open(r'c:\Users\jianan\Desktop\政府工作报告.txt',encoding="utf-8",mode="r")
+txt=f.read()
+f.close()
+b='''·~！@#￥%……&*（）——+-=|：“《》？【】、；,，。.‘，。/\n'''
+for i in b:
+    txt=txt.replace(i,"")
+ls=j.lcut(txt)
+a=" ".join(ls)
+mask=imread(r'c:\Users\jianan\Desktop\政府工作报告 mask.png')
+w=wc.WordCloud(font_path=r"C:\Windows\Fonts\simhei.ttf",width=1000,height=700,background_color="white", regexp=r"\S+", mask=mask)
+w.generate(a)
+w.to_file(r'c:\Users\jianan\Desktop\政府工作报告.png')

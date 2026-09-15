@@ -1,0 +1,24 @@
+import turtle as t
+import time
+t.setup(1500,800,0,0)
+t.pensize(5)
+t.speed(1)
+f=open(r"C:\Users\jianan\Desktop\轨迹.txt",encoding="utf-8",mode="r")
+data=[]
+for line in f:
+    data.append(list(map(eval,line.split(','))))
+f.close()
+for i in range(len(data)):
+    t.pencolor(data[i][1],data[i][2],data[i][3])
+    if data[i][0]==0:
+        t.penup()
+    elif data[i][0]==1:
+        t.pendown()
+    
+    if data[i][4]==0:
+        t.left(data[i][5])
+    elif data[i][6]==1:
+        t.right(data[i][5])
+    t.fd(data[i][6])
+t.hideturtle()
+time.sleep(2)

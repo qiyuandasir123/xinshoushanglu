@@ -1,0 +1,15 @@
+import turtle as T
+T.setup(1200,800,120,120)
+T.penup()
+T.bk(500)
+T.right(90)
+T.fd(300)
+T.left(90)
+T.fd(150)
+T.pendown()
+T.pensize(20)
+T.pencolor("black")
+for i in range(9):
+    T.fd(500)
+    T.left(80)
+T.done()

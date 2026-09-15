@@ -1,0 +1,40 @@
+# HollandRadarDraw.py
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+
+matplotlib.rcParams['font.family'] = 'SimHei'
+
+radar_labels = np.array(['数学','物理','科研','幽默','艺术','社会'])
+
+# 数据（用户 vs 参考）
+data = np.array([[0.90, 0.99, 0.98, 0.85, 0.90, 0.90],
+                 [0.20, 0.20, 0.30, 0.60, 0.40, 0.60]])
+
+data_labels = ('明卓同志', '参考')
+
+# 计算角度
+angles = np.linspace(0, 2 * np.pi, len(radar_labels), endpoint=False)
+angles = np.concatenate((angles, [angles[0]]))
+
+# 创建雷达图
+fig = plt.figure(facecolor='white')
+ax = fig.add_subplot(111, polar=True)
+ax.set_thetagrids(angles[:-1] * 180 / np.pi, radar_labels, fontproperties='SimHei')
+ax.set_rgrids([0.2, 0.4, 0.6, 0.8])
+ax.set_title('牢卓实力分析', fontproperties='SimHei', fontsize=20)
+
+# 绘制数据
+for i in range(len(data)):
+    values = np.concatenate((data[i], [data[i][0]]))
+    ax.plot(angles, values, 'o-', linewidth=2, label=data_labels[i])
+    ax.fill(angles, values, alpha=0.25)
+
+ax.legend(loc='upper right', bbox_to_anchor=(1.1, 1.1))
+
+# 底部注释
+plt.figtext(0.5, 0.02, '仅供娱乐，请勿当真，如有雷同，狗头保命',
+            ha='center', fontsize=12, fontproperties='SimHei',
+            color='gray', style='italic')
+
+plt.show()

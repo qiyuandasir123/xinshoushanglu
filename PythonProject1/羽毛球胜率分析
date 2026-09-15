@@ -1,0 +1,80 @@
+import time as t
+import random
+def intro():
+    print("Welcome to the Sports Competition Analysis Program!")
+    t.sleep(2)  
+    print("分析开始!")
+    t.sleep(1) 
+    A球商=float(input("请输入运动员A的球商(0-5): "))
+    A心理=float(input("请输入运动员A的心理(0-5): "))
+    A体能=float(input("请输入运动员A的体能(0-5): "))
+    A技术=float(input("请输入运动员A的技术(0-5): "))
+    A进攻=float(input("请输入运动员A的进攻(0-5): "))
+    A防守=float(input("请输入运动员A的防守(0-5): "))
+    B球商=float(input("请输入运动员B的球商(0-5): "))
+    B心理=float(input("请输入运动员B的心理(0-5): "))
+    B体能=float(input("请输入运动员B的体能(0-5): "))
+    B技术=float(input("请输入运动员B的技术(0-5): "))
+    B进攻=float(input("请输入运动员B的进攻(0-5): "))
+    B防守=float(input("请输入运动员B的防守(0-5): "))
+    A=(float(A球商)+float(A心理)+float(A体能)+float(A技术)+float(A进攻)+float(A防守))/6
+    B=(float(B球商)+float(B心理)+float(B体能)+float(B技术)+float(B进攻)+float(B防守))/6                                 
+    return A, B
+def process(A, B):
+    print("计算酱在用力计算中...勿que")
+    t.sleep(0.1) 
+    a = 0
+    b = 0
+    sever = 'a'
+    assert 0 <= A <= 5, "A的值必须在0到5之间"
+    assert 0 <= B <= 5, "B的值必须在0到5之间"
+    A = A / 5  # 将A的值归一化到0到 1之间
+    B = B / 5  # 将B的值归一化到0到 1之间
+    while not gameover(a, b):
+        if sever == 'a':
+            if random.random() < A:
+                a += 1
+                sever = 'a'
+            else:
+                sever = 'b'
+        elif sever == 'b':
+            if random.random() < B:
+                b += 1
+                sever = 'b'
+            else:
+                sever = 'a'
+    return a, b
+def gameover(a, b):
+    return a==15 or b==15
+def result(a, b):
+    print("The game is over!")
+    if a > b:
+        print("运动员A获胜!")
+    elif b > a:
+        print("运动员B获胜!")
+    else:
+        print("比赛平局!")
+def main():
+    A, B = intro()
+    wina = 0
+    winb = 0
+    for i in range(1, 4):
+        print(f'\n--- 第{i}局 ---')
+        a, b = process(A, B)
+        result(a, b)
+        if a > b:
+            wina+=1
+        elif b > a:
+            winb += 1
+        if wina == 2 or winb == 2:
+            break
+    print(f'\n最终比分: A {wina} - {winb} B')
+    if wina == 2:
+        print("运动员A赢得了比赛!")
+    elif winb==2:
+        print("运动员B赢得了比赛!")
+main()
+        
+        
+
+
