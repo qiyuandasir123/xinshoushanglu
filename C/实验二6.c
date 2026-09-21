@@ -2,10 +2,9 @@
 #include <windows.h>
 int main()
 {
-    printf("请输入华氏度：");
-    float F;
-    scanf("%f",&F);
-    float C=5*(F-32)/9;
-    printf("%.5f",C);
+    double F;
+    scanf("%lf",&F);
+    double C=5*(F-32)/9;
+    printf("%.5f\n",C);
     return 0;
 }

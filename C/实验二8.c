@@ -4,11 +4,10 @@ int main()
 {   
     int a;char c;int b;
     scanf("%d %c %d",&a,&c,&b);
-    printf("%d %d %d\n",a,b,c);
-    printf("%d %d %d\n",a+b,a-b,a*b,a/b,a%b);
-    float d=(float)a/b;
-    printf("The ratio of %d versus %d is %f\n",a,b,d);
-    d*=100;
-    printf("The ratio of %d / %d is %.2f %%\n",a,b,d);
+    printf("%d %d %c\n",a,b,c);
+    printf("%d %d %lld %d %d\n",a+b,a-b,(long long)a*b,a/b,a%b);
+    double d=(double)a/b;
+    printf("The ratio of %d versus %d is %.2f.\n",a,b,d);
+    printf("The ratio of %d / %d is %.2f%%.\n",a,b,d*100);
     return 0;
 }
