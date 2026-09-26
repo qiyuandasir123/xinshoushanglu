@@ -13,28 +13,25 @@
 #include <string.h>
 #include <windows.h>
 #include <mmsystem.h>
-
 #define COLS 120
 #define ROWS 45
-
-/* 探测可用的 txt 文件夹，把路径前缀写进 out */
 static void find_txt(char *out, size_t n)
 {
     char exe[512], base[600], cand[700];
-    GetModuleFileNameA(NULL, exe, sizeof exe);      /* exe 自己的完整路径 */
+    GetModuleFileNameA(NULL, exe, sizeof exe);      /* exe的路径 */
     char *s = strrchr(exe, '\\');
-    if (s) *s = 0;                                  /* 去掉文件名，剩下目录 */
+    if (s) *s = 0;                                  /* 去名 */
 
     for (int k = 0; k < 3; ++k) {
-        if (k == 0) snprintf(base, sizeof base, "%s\\txt", exe);  /* exe 同级 */
-        else if (k == 1) snprintf(base, sizeof base, "txt");      /* 当前目录 */
-        else snprintf(base, sizeof base, "..\\txt");              /* 上一级 */
+        if (k == 0) snprintf(base, sizeof base, "%s\\txt", exe);  
+        else if (k == 1) snprintf(base, sizeof base, "txt");      
+        else snprintf(base, sizeof base, "..\\txt");            
 
         snprintf(cand, sizeof cand, "%s\\1.txt", base);
         FILE *f = fopen(cand, "r");
         if (f) { fclose(f); snprintf(out, n, "%s", base); return; }
     }
-    snprintf(out, n, "txt");                        /* 都没有就退回默认 */
+    snprintf(out, n, "txt");                        
 }
 
 int main(void) {
@@ -50,12 +47,12 @@ int main(void) {
     if (cf) { fscanf(cf, "%ld", &frames); fclose(cf); }
 
     SMALL_RECT r = {0, 0, 1, 1};
-    SetConsoleWindowInfo(h, TRUE, &r);                   /* 先把窗口缩小 */
+    SetConsoleWindowInfo(h, TRUE, &r);                 
     SetConsoleScreenBufferSize(h, (COORD){COLS, ROWS});  /* 缓冲区=一帧，不滚屏 */
     r = (SMALL_RECT){0, 0, COLS - 1, ROWS - 1};
-    SetConsoleWindowInfo(h, TRUE, &r);                   /* 窗口撑到整帧 */
+    SetConsoleWindowInfo(h, TRUE, &r);                   
 
-    timeBeginPeriod(1);                                  /* 1ms 精度，才是真 30fps */
+    timeBeginPeriod(1);                                  /* 1ms */
     LARGE_INTEGER f, t0, t;
     QueryPerformanceFrequency(&f);
     QueryPerformanceCounter(&t0);
@@ -64,11 +61,11 @@ int main(void) {
         snprintf(path, sizeof path, "%s\\%ld.txt", dir, i);
         FILE *fp = fopen(path, "r");
         if (fp) {
-            SetConsoleCursorPosition(h, home);           /* 回左上角原位覆盖 */
+            SetConsoleCursorPosition(h, home);           
             while (fgets(buf, sizeof buf, fp)) fputs(buf, stdout);
             fclose(fp);
         }
-        while (1) {                                      /* 精确对帧，误差不累积 */
+        while (1) {                                      /* 对帧 */
             QueryPerformanceCounter(&t);
             if ((double)(t.QuadPart - t0.QuadPart) / f.QuadPart >= i / 30.0) break;
             Sleep(1);

@@ -9,5 +9,9 @@ int main(void)
     {
         printf("%c", a[i]);
     }
+    char *s1="abc";
+    char *s2="Abc";
+    printf("%d",strcmp(s1,s2));
+    printf("%d",s1-s2);
     return 0;
 }
