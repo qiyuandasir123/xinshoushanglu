@@ -1,3 +1,4 @@
+#line 2 "D:\\code\\C\\素数和.c"
 #include <windows.h>
 #include <stdio.h>
 int main()

@@ -1,3 +1,4 @@
+#line 2 "D:\\code\\C\\变量互换.c"
 #include <stdio.h>
 #include <windows.h>
 

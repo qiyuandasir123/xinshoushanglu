@@ -5,7 +5,7 @@
             "name": "C/C++: gcc.exe 构建和调试活动文件",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "program": "${fileDirname}\\out.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

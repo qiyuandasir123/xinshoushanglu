@@ -9,7 +9,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${fileDirname}\\out.exe",
                 "-lwinmm"
             ],
             "options": {
@@ -27,7 +27,7 @@
         {
             "label": "运行当前文件（VS Code 集成终端）",
             "type": "shell",
-            "command": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "command": "${fileDirname}\\out.exe",
             "args": [],
             "options": {
                 "cwd": "${fileDirname}"
@@ -49,7 +49,7 @@
                 "/c",
                 "start",
                 "",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\out.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -60,6 +60,85 @@
             },
             "problemMatcher": [],
             "dependsOn": "C/C++: gcc.exe 生成活动文件"
+        },
+        {
+            "type": "cppbuild",
+            "label": "多文件: 编译当前文件夹内所有 .c",
+            "command": "D:\\mingw64\\bin\\gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${fileDirname}\\*.c",
+                "-o",
+                "${fileDirname}\\out.exe",
+                "-lwinmm"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "把当前 .c 所在文件夹里的所有 .c 一起编译链接成一个 exe。要求该文件夹里只有一个 main()。"
+        },
+        {
+            "label": "多文件: 运行（VS Code 集成终端）",
+            "type": "shell",
+            "command": "${fileDirname}\\out.exe",
+            "args": [],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true,
+                "focus": true
+            },
+            "problemMatcher": [],
+            "dependsOn": "多文件: 编译当前文件夹内所有 .c"
+        },
+        {
+            "label": "工具: 给当前文件加 #line（修中文名断点）",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\.vscode\\add_line_directive.ps1",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "problemMatcher": [],
+            "detail": "在文件第 1 行插入 #line 2 \"<文件名>\"，让中文文件名的断点能被 gdb/lldb 认到。运行前先 Ctrl+S 保存。"
+        },
+        {
+            "label": "调试前准备: 修中文名 + 编译当前文件",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "工具: 给当前文件加 #line（修中文名断点）",
+                "C/C++: gcc.exe 生成活动文件"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "调试前准备: 修中文名 + 编译整个文件夹",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "工具: 给当前文件加 #line（修中文名断点）",
+                "多文件: 编译当前文件夹内所有 .c"
+            ],
+            "problemMatcher": []
         }
     ],
     "version": "2.0.0"
