@@ -20,5 +20,8 @@ int main(void)
     printf("c=%d\n",c);
     printf("c>>2=%hhx\n",c>>2);
     printf("c>>2=%d\n",c>>2);
+    int d=0x7fffffff;
+    printf("d=%hhx\n",d);
+    printf("d=%d\n",d);
     return 0;
 }
