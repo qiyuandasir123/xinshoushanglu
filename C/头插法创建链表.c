@@ -15,6 +15,7 @@ void freeList(Node *head)
 }
 int main(void){
     SetConsoleOutputCP(65001);
+    printf("\n");
     Node *L=(Node*)malloc(sizeof(Node));   /* 头结点: 不放数据 */
     if (L==NULL){
         return 1;
